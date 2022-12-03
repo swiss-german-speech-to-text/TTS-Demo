@@ -1,0 +1,81 @@
+id	sentence_de	sentence_ch	real time factor	dialect
+ag-103784	Was soll ich bloss tun?	Was sölli bloss mache?	0.31751295349196246	ag
+ag-101472	Das ist anspruchsvoll auch für den Hörer.	Das esch aspruchsvoll au för de Hörer.	0.2606904542292742	ag
+ag-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	En Notebank-Sprechende het am Mettwoch en Stellignahm abglehnt.	0.3381866901455557	ag
+ag-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D'Politik esch de Rum för öffentlechi Entscheidige.	0.2521356712411908	ag
+ag-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D'Uneinigkeit zieht au dor die städtische Sozialdemokratische.	0.34140241510085473	ag
+ag-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Of internationaler Ebeni send gmeinsami Norme ond Standards ahz'wände.	0.33684106582697637	ag
+ag-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D'Mord-Qualifikation seigi edem Fall dopplet geh.	0.25494311428568905	ag
+ag-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Johr send vieresächzg Prozänt stolz of eri Heimat gsi.	0.34868710605820086	ag
+ag-111828	Genau definiert ist das nicht.	Genau definiart esch das ned.	0.24842452907631563	ag
+ag-89024	Die Arche ist voll.	D'Arche esch voll.	0.27089538481576664	ag
+be-103784	Was soll ich bloss tun?	Was söu i bloss machä?	0.24776712209933388	be
+be-101472	Das ist anspruchsvoll auch für den Hörer.	Das isch aspruchsvou o fürä Hörer.	0.24387150770053267	be
+be-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	Notäbank-Schprächer het am Mittwuch ä Schtellignahm abglehnt.	0.3298127965128922	be
+be-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D Politik isch dr Ruum für öffentlechi Entscheidigä.	0.2487091595267362	be
+be-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D Uneinigkeit zieht o dür die schtadtischä Soziaudemokratischä.	0.33676433376967907	be
+be-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebeni si gmeinsami Nortlä und Schtandardä aazwändä.	0.34403378960408576	be
+be-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D Mord-Qualifikation sig i däm Fau dopplet gä.	0.2504375845412997	be
+be-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Jahr si si sibänäsächzg Prozänt schouf iri Heimat gsi.	0.3313974815767345	be
+be-111828	Genau definiert ist das nicht.	Genau definiart isch das nid.	0.2526189731871522	be
+be-89024	Die Arche ist voll.	D Archä isch vou.	0.27349881467319304	be
+bs-103784	Was soll ich bloss tun?	Was söll ich bloss due?	0.25674683041870594	bs
+bs-101472	Das ist anspruchsvoll auch für den Hörer.	Das isch aspruchsvoll au für de Hörer.	0.26028150901756186	bs
+bs-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	Notebank-Sprächer het am Mittwuch ä Stellignahm abglähnt.	0.3407933894582343	bs
+bs-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D Politik isch dr Ruum für öffentlichi Entscheidige.	0.26893909708897196	bs
+bs-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D Uneinigkeit zieht au durch die städtische Sozialdemokrate.	0.3410219728586174	bs
+bs-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebeni sind gmeinsami Norme und Standards ahzwände.	0.32899977551663623	bs
+bs-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D Mord-Qualifikation sig in däm Fall dopplet geh.	0.34313966595643275	bs
+bs-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Joor sind vieresibzig Prozänt stolz uf ihri Heimat gseh.	0.33814834958729256	bs
+bs-111828	Genau definiert ist das nicht.	Genau definiart isch das nid.	0.2542900648568907	bs
+bs-89024	Die Arche ist voll.	D Arche isch voll.	0.2690653196505962	bs
+gr-103784	Was soll ich bloss tun?	Was söll i numa macha?	0.2749472038223616	gr
+gr-101472	Das ist anspruchsvoll auch für den Hörer.	Das isch aspruchsvoll au für da Hörer.	0.2650989778339863	gr
+gr-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	An Notabank-Sprecher het am Mittwuch a Stellignahm abglehnt.	0.34034969439209606	gr
+gr-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D Politik isch dr Ruum für öffentlichi Entscheidiga.	0.2616951200937809	gr
+gr-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D Uneinigkeit zücht au dur dia städtischa Sozialdemokrata.	0.3441039554354398	gr
+gr-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebeni sind gmeinsami Norma und Standards azwenda.	0.350623534239353	gr
+gr-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D Mord-Qualifikation sig in dem Fall dopplet geh.	0.2582429236044054	gr
+gr-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Schu vor zehn Johr sind vierasiebzig Prozent stolz uf ihri Heimat gsi.	0.3392584271257721	gr
+gr-111828	Genau definiert ist das nicht.	Genau definiart isch das nit.	0.2797525516417745	gr
+gr-89024	Die Arche ist voll.	D Archa isch voll.	0.28101154952310026	gr
+lu-103784	Was soll ich bloss tun?	Was sell ech bloss mache?	0.284371373096579	lu
+lu-101472	Das ist anspruchsvoll auch für den Hörer.	Das esch aso voll för de Hörer.	0.2638019519978233	lu
+lu-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	En Notebank-Sprächel hed am Mettwoch en Stellignahm abglehnt.	0.3439171869746026	lu
+lu-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D Politik esch de Ruum för öffentlechi Entscheidige.	0.2644040200086135	lu
+lu-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D Uneinigkeit zieht au dör di städtische Sozialdemokratische.	0.36648344866989646	lu
+lu-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebene send gmeinsami Norme ond Standards azwände.	0.34176425103379304	lu
+lu-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D Mord Qualifikation seg i dem Fall dopplet gäh.	0.2616493352073825	lu
+lu-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Johr send vieresächzg Prozänt Stolz uf ehri Heimat gsi.	0.34694929686193965	lu
+lu-111828	Genau definiert ist das nicht.	Genau definiart esch das ned.	0.2725297432334628	lu
+lu-89024	Die Arche ist voll.	D Arche esch voll.	0.2964571259136117	lu
+sg-103784	Was soll ich bloss tun?	Wa sött i bloss mache?	0.267694483618023	sg
+sg-101472	Das ist anspruchsvoll auch für den Hörer.	Da isch aspruchsvoll au für de Hörer.	0.28297715065603574	sg
+sg-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	En Notebank-Sprecher het am Mittwuch e Stelligsnahm abglehnt.	0.36938030093221524	sg
+sg-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	dPolitik isch de Ruum für öffentlichi Entscheidige.	0.33520905930987177	sg
+sg-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	dUneiigkeit zieht au dur di städtische Sozialdemokrate.	0.34192797375490536	sg
+sg-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebeni sind gmeinsami Norme und Standards aazwende.	0.3405677737249677	sg
+sg-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	dMord Qualifikation seg i dem Fall dopplet geh.	0.3421838948270306	sg
+sg-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zeh Johr sind vieresiebezg Prozent stolz uf ihri Heimat gsi.	0.33035194143079794	sg
+sg-111828	Genau definiert ist das nicht.	Genau definiart isch da nöd.	0.2628714654524371	sg
+sg-89024	Die Arche ist voll.	dArche isch voll.	0.28363992818273026	sg
+vs-103784	Was soll ich bloss tun?	Was soll ich bloss machu?	0.28674363908646383	vs
+vs-101472	Das ist anspruchsvoll auch für den Hörer.	Das isch aspruchsvoll öi fer de Hörer.	0.27885460539868	vs
+vs-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	En Notubank-Redendu het am Mittwoch en Stellignahm abglehnt.	0.36196393498388313	vs
+vs-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	Die Politik isch der Rüüm fer öffentlichi Entscheidige.	0.27034181882353386	vs
+vs-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D'Uneiigkeit zieht öi durch d'städtischu Sozialdemokrate.	0.35271573752323365	vs
+vs-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler beni sind gmeinsami Norme und Standards ahzwändu.	0.3468059198156981	vs
+vs-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D'Mord-Qualifikation sige in dem Fall doppelt gigä.	0.349329497354726	vs
+vs-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Jahr sind sibunusibzg Prozänt stolz uf ihrusch Heimat gsi.	0.35102487646672925	vs
+vs-111828	Genau definiert ist das nicht.	Genau definiart isch das nit.	0.28051257454412615	vs
+vs-89024	Die Arche ist voll.	D'Archa isch voll.	0.3060241377748111	vs
+zh-103784	Was soll ich bloss tun?	Was sölli eifach mache?	0.2847764802069586	zh
+zh-101472	Das ist anspruchsvoll auch für den Hörer.	Das isch aspruchsvoll au für de Hörer.	0.26357568052337793	zh
+zh-107827	Ein Notenbank-Sprecher lehnte am Mittwoch eine Stellungnahme ab.	En Notebank-Sprächer hät am Mittwuch e Stelligsnahm abglehnt.	0.3489718140052581	zh
+zh-106518	Die Politik ist der Raum für öffentliche Entscheidungen.	D Politik isch de Rum für öffentlichi Entscheitige.	0.26453863749087886	zh
+zh-117058	Die Uneinigkeit zieht auch durch die städtischen Sozialdemokraten.	D Uneiigkeit zieht au dur di städtische Sozialdemokrate.	0.3422599603775246	zh
+zh-139586	Auf internationaler Ebene sind gemeinsame Normen und Standards anzuwenden.	Uf internationaler Ebeni sind gmeinsami Norme und Standards ahzwände.	0.34839363256824835	zh
+zh-81358	Die Mord-Qualifikation sei in diesem Fall doppelt gegeben.	D Mord Qualifikation seg i däm Fall doppled geh.	0.2576869005631459	zh
+zh-86914	Schon vor zehn Jahren waren 74 Prozent stolz auf ihre Heimat.	Scho vor zäh Jahr sind vieresächzg Prozänt stolz uf ihri Heimat gsi.	0.3594614212980141	zh
+zh-111828	Genau definiert ist das nicht.	Genau definiart isch das nöd.	0.27677240688353777	zh
+zh-89024	Die Arche ist voll.	D Arche isch volle.	0.2925134031102061	zh

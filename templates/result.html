@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <form action="/wav" style="display: inline;">
+            <input type="hidden" name="translate" value="true">
+
+            <div class="col">
+                <label for="text_de" class="form-label">Text De</label>
+                <textarea class="form-control" name="text_de" id="text_de" rows="3">{{text_de}}</textarea>
+                <label for="dialect_translate" class="form-label mt-3 mb-3">Dialect</label>
+                <select name="dialect" id="dialect_translate" >
+                    <option value="0" {% if dialect == "0" %} selected {% endif %}>ag</option>
+                    <option value="1" {% if dialect == "1" %} selected {% endif %}>be</option>
+                    <option value="2" {% if dialect == "2" %} selected {% endif %}>bs</option>
+                    <option value="3" {% if dialect == "3" %} selected {% endif %}>gr</option>
+                    <option value="4" {% if dialect == "4" %} selected {% endif %}>lu</option>
+                    <option value="5" {% if dialect == "5" %} selected {% endif %}>sg</option>
+                    <option value="6" {% if dialect == "6" %} selected {% endif %}>vs</option>
+                    <option value="7" {% if dialect == "7" %} selected {% endif %}>zh</option>
+                </select>
+                <input class="btn btn-primary form-control" type="submit" value="Translate"></input>
+            </div>
+        </form>
+
+        <form action="/wav" style="display: inline;">
+            <input type="hidden" name="synthesize" value="true">
+
+            <div class="col">
+                <label for="text_ch" class="form-label">Text Ch</label>
+                <textarea class="form-control" name="text_ch" id="text_ch" rows="3">{{text_ch}}</textarea>
+                <label for="dialect" class="form-label mt-3 mb-3">Dialect</label>
+                <select name="dialect" id="dialect" >
+                    <option value="0" {% if dialect == "0" %} selected {% endif %}>ag</option>
+                    <option value="1" {% if dialect == "1" %} selected {% endif %}>be</option>
+                    <option value="2" {% if dialect == "2" %} selected {% endif %}>bs</option>
+                    <option value="3" {% if dialect == "3" %} selected {% endif %}>gr</option>
+                    <option value="4" {% if dialect == "4" %} selected {% endif %}>lu</option>
+                    <option value="5" {% if dialect == "5" %} selected {% endif %}>sg</option>
+                    <option value="6" {% if dialect == "6" %} selected {% endif %}>vs</option>
+                    <option value="7" {% if dialect == "7" %} selected {% endif %}>zh</option>
+                </select>
+                <input class="btn btn-primary form-control" type="submit" value="Sythesize"></input>
+            </div>
+        </form>
+    </div>
+
+    {% if audio_data %}
+    <div class="col m-5">
+        <a class="btn btn-primary w-100" onclick="play()">Play</a>
+        <div id="waveform"></div>
+        <div id="wave-spectrogram"></div>
+    </div>
+
+    <script>
+        let wavesurfer = null;
+
+        function play() {
+            wavesurfer.play();
+        }
+
+        function _base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            wavesurfer = WaveSurfer.create({
+                container: "#waveform",
+                waveColor: "violet",
+                progressColor: "purple",
+                normalize: true,
+                responsive: true,
+                plugins: [
+                    WaveSurfer.spectrogram.create({
+                        container: "#wave-spectrogram",
+                        labels: true,
+                        height: 256,
+                    }),
+                ],
+            });
+
+            wavesurfer.loadArrayBuffer(_base64ToArrayBuffer('{{ audio_data }}'));
+        });
+    </script>
+
+    {% endif %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <script src="static/wavesurfer.js"></script>
+    <script src="static/wavesurfer.spectrogram.min.js"></script>
+</div>
+</body>
+</html>

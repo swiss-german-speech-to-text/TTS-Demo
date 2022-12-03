@@ -17,6 +17,8 @@ from tts_models import *
 import io
 
 app = Flask(__name__)
+global model_data
+global translator
 model_data = ch_vits_char_swissDial
 translator = Translator("de_to_ch/experiments/transcribed_version__20220721_104626")
 
@@ -74,15 +76,7 @@ def translate_to_ch(text_de: str, dialect: int):
     dialect = id_to_dialect[dialect]
     return translator.translate_one(f"{dialect}: {text_de}")
 
-
-@app.route('/')
-def hello_world():  # put application's code here
-
-
-    return 'Hello World!'
-
-
-@app.route("/wav")
+@app.route("/")
 def streamwav():
     text_de = request.args.get('text_de', '')
     text_ch = request.args.get('text_ch', '')

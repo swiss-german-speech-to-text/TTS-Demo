@@ -1,5 +1,6 @@
 services:
-  web:
+  tts:
+    container_name: tts
     build: .
     ports:
       - "8080:80"

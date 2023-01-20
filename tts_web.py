@@ -78,7 +78,7 @@ def translate_to_ch(text_de: str, dialect: int):
     return translator.translate_one(f"{dialect}: {text_de}")
 
 
-@app.route("/", methods=['GET'])
+@app.route("/tts", methods=['GET'])
 def home():
     text_de = request.form.get('text_de', '')
     text_ch = request.form.get('text_ch', '')
@@ -87,7 +87,7 @@ def home():
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
 
-@app.route("/translate", methods=['POST'])
+@app.route("/tts/translate", methods=['POST'])
 def translate():
     text_de = request.form.get('text_de', '')
     text_ch = request.form.get('text_ch', '')
@@ -99,7 +99,7 @@ def translate():
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
 
-@app.route("/synthesize", methods=['POST'])
+@app.route("/tts/synthesize", methods=['POST'])
 def synthesize():
     text_de = request.form.get('text_de', '')
     text_ch = request.form.get('text_ch', '')

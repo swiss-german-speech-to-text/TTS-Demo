@@ -17,10 +17,22 @@ from tts_models import *
 import io
 
 app = Flask(__name__)
+
+MAX_TEXT_LEN = 256
+
 global model_data
 global translator
+global xvector
+global tts
 model_data = ch_vits_char_swissDial
 translator = Translator("de_to_ch/experiments/transcribed_version__20220721_104626")
+wd = str(Path().absolute())
+model_dir = os.path.join(wd, model_data["working_dir"])
+xvector = XVector(os.path.join(model_dir, "dump/**/spk_xvector.ark"))
+tts = Text2Speech.from_pretrained(
+        model_file=os.path.join(model_dir, model_data["model_file"]),
+        vocoder_file=os.path.join(model_dir, model_data["vocoder_file"]))
+
 
 id_to_dialect = {
     0: 'ag',
@@ -34,7 +46,7 @@ id_to_dialect = {
 }
 
 
-def interference_ch(speaker_id: int, text_ch: str, xvector: XVector = None) -> Tuple[np.ndarray, int]:
+def inference_ch(speaker_id: int, text_ch: str) -> Tuple[np.ndarray, int]:
     """
     :param speaker_id:
     for swissDial:
@@ -51,17 +63,6 @@ def interference_ch(speaker_id: int, text_ch: str, xvector: XVector = None) -> T
     :param xvector: .
     :return: (wav series, sampling_rate)
     """
-    wd = str(Path().absolute())
-    model_dir = wd + model_data["working_dir"]
-    # os.chdir(wd + model_data["working_dir"])
-
-    if xvector is None:
-        xvector = XVector(model_dir + "/dump/**/spk_xvector.ark")
-
-    tts = Text2Speech.from_pretrained(
-        model_file=os.path.join(model_dir, model_data["model_file"]),
-        vocoder_file=os.path.join(model_dir, model_data["vocoder_file"]))
-
     spembs = xvector.get_spembs(speaker_id)
 
     with torch.no_grad():
@@ -76,20 +77,37 @@ def translate_to_ch(text_de: str, dialect: int):
     dialect = id_to_dialect[dialect]
     return translator.translate_one(f"{dialect}: {text_de}")
 
-@app.route("/")
-def streamwav():
-    text_de = request.args.get('text_de', '')
-    text_ch = request.args.get('text_ch', '')
-    dialect = request.args.get('dialect', None)
-    translate = request.args.get('translate', None)
-    synthesize = request.args.get('synthesize', None)
+
+@app.route("/", methods=['GET'])
+def home():
+    text_de = request.form.get('text_de', '')
+    text_ch = request.form.get('text_ch', '')
+    dialect = request.form.get('dialect', None)
+    audio_data = None
+    return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
+
+
+@app.route("/translate", methods=['POST'])
+def translate():
+    text_de = request.form.get('text_de', '')
+    text_ch = request.form.get('text_ch', '')
+    dialect = request.form.get('dialect', None)
     audio_data = None
 
-    if translate is not None and text_de != '' and dialect is not None:
+    if text_de != '' and len(text_de) < MAX_TEXT_LEN and dialect is not None:
         text_ch = translate_to_ch(text_de, int(dialect))
+    return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
-    if synthesize is not None and text_ch != '' and dialect is not None:
-        wav, sr = interference_ch(int(dialect), text_ch)
+
+@app.route("/synthesize", methods=['POST'])
+def synthesize():
+    text_de = request.form.get('text_de', '')
+    text_ch = request.form.get('text_ch', '')
+    dialect = request.form.get('dialect', None)
+    audio_data = None
+
+    if text_ch != '' and len(text_ch) < 256 and dialect is not None:
+        wav, sr = inference_ch(int(dialect), text_ch)
 
         bytes_wav = bytes()
         byte_io = io.BytesIO(bytes_wav)
@@ -98,19 +116,6 @@ def streamwav():
 
         audio_data = base64.b64encode(wav_bytes).decode('UTF-8')
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
-
-
-@app.route('/wav2', methods=['POST'])
-def streamwav3():
-    text_de = request.form['text']
-    wav, sr = interference_ch(0, text_de)
-
-    bytes_wav = bytes()
-    byte_io = io.BytesIO(bytes_wav)
-    write(byte_io, sr, wav)
-    wav_bytes = byte_io.read()
-
-    return Response(wav_bytes, mimetype="audio/x-wav")
 
 
 if __name__ == '__main__':

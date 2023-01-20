@@ -22,7 +22,7 @@ class Translator:
             sentences,
             return_tensors='pt',
             truncation=True,
-            max_length=128,
+            max_length=256,
             padding=True
         )
         decoded_out = self.model.generate(

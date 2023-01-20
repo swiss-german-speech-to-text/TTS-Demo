@@ -1,111 +1,232 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Text to Speech for Swiss German</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        /* Add some custom CSS to improve UI */
+        .form-control {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .loading-spinner-container {
+            position: fixed; /* position the container on top of the content */
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7); /* add a semi-transparent background */
+            z-index: 10; /* make sure the container is on top of the content */
+            display: none; /* hide the container by default */
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ccc;
+            border-top: 4px solid #333;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-spinner-container.active {
+            display: flex; /* show the container when the spinner is active */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            filter: blur(5px); /* add a blur effect */
+            z-index: 1; /* make sure the pseudo-element is behind the content */
+            display: none; /* hide the pseudo-element by default */
+        }
+
+        .content.blurred::before {
+            display: block; /* show the pseudo-element when the spinner is active */
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <form action="/" style="display: inline;">
-            <input type="hidden" name="translate" value="true">
-
-            <div class="col">
-                <label for="text_de" class="form-label">Text De</label>
-                <textarea class="form-control" name="text_de" id="text_de" rows="3">{{text_de}}</textarea>
-                <label for="dialect_translate" class="form-label mt-3 mb-3">Dialect</label>
-                <select name="dialect" id="dialect_translate" >
-                    <option value="0" {% if dialect == "0" %} selected {% endif %}>ag</option>
-                    <option value="1" {% if dialect == "1" %} selected {% endif %}>be</option>
-                    <option value="2" {% if dialect == "2" %} selected {% endif %}>bs</option>
-                    <option value="3" {% if dialect == "3" %} selected {% endif %}>gr</option>
-                    <option value="4" {% if dialect == "4" %} selected {% endif %}>lu</option>
-                    <option value="5" {% if dialect == "5" %} selected {% endif %}>sg</option>
-                    <option value="6" {% if dialect == "6" %} selected {% endif %}>vs</option>
-                    <option value="7" {% if dialect == "7" %} selected {% endif %}>zh</option>
-                </select>
-                <input class="btn btn-primary form-control" type="submit" value="Translate"></input>
+<div class="loading-spinner-container" id="loadingSpinnerContainer">
+    <div class="loading-spinner" id="loadingSpinner"></div>
+</div>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1 class="display-4">Schweizerdeutsch Text to Speech</h1>
+                    <p>Hochdeutsche Texte können automatisch in einen von 8 schweizerdeutschen Dialekten übersetzt werden. Wir unterstützen folgende Kantone: </p>
+                    <p>Aargau, Bern, Basel, Graubünden, Luzern, St Gallen, Wallis, Zürich</p>
+                    <p>Die schweizerdeutschen Texte können anschliessend automatisch im entsprechenden Dialekt synthetisiert werden.</p>
+                    <p>Wir empfehlen die Texte auf Hochdeutsch zu schreiben und automatisch in den entsprechenden Dialekt übersetzen zu lassen. Das Text-to-Speech System funktioniert mit dieser schweizerdeutschen Schreibweise am besten.</p>
+                    <p>Credits: Tobias Bollinger. Verwendete Trainingsdaten: SwissDial 1.1 <a href="https://mtc.ethz.ch/publications/open-source/swiss-dial.html">https://mtc.ethz.ch/publications/open-source/swiss-dial.html</a></p>
+                </div>
             </div>
-        </form>
-
-        <form action="/" style="display: inline;">
-            <input type="hidden" name="synthesize" value="true">
-
             <div class="col">
-                <label for="text_ch" class="form-label">Text Ch</label>
-                <textarea class="form-control" name="text_ch" id="text_ch" rows="3">{{text_ch}}</textarea>
-                <label for="dialect" class="form-label mt-3 mb-3">Dialect</label>
-                <select name="dialect" id="dialect" >
-                    <option value="0" {% if dialect == "0" %} selected {% endif %}>ag</option>
-                    <option value="1" {% if dialect == "1" %} selected {% endif %}>be</option>
-                    <option value="2" {% if dialect == "2" %} selected {% endif %}>bs</option>
-                    <option value="3" {% if dialect == "3" %} selected {% endif %}>gr</option>
-                    <option value="4" {% if dialect == "4" %} selected {% endif %}>lu</option>
-                    <option value="5" {% if dialect == "5" %} selected {% endif %}>sg</option>
-                    <option value="6" {% if dialect == "6" %} selected {% endif %}>vs</option>
-                    <option value="7" {% if dialect == "7" %} selected {% endif %}>zh</option>
-                </select>
-                <input class="btn btn-primary form-control" type="submit" value="Sythesize"></input>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Deutsch zu Schweizerdeutsch Textübersetzung</h5>
+                        <form action="/translate" method="post">
+                            <input type="hidden" name="translate" value="true">
+                            <div class="form-group">
+                                <label for="text_de">Deutscher Text</label>
+                                <textarea class="form-control" name="text_de" id="text_de" rows="3" maxlength="256">{{text_de}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dialect_translate">in folgenden Dialekt übersetzen</label>
+                                <select name="dialect" id="dialect_translate" class="form-control">
+                                    <option value="0" {% if dialect=="0" %} selected {% endif %}>AG</option>
+                                    <option value="1" {% if dialect=="1" %} selected {% endif %}>BE</option>
+                                    <option value="2" {% if dialect=="2" %} selected {% endif %}>BS</option>
+                                    <option value="3" {% if dialect=="3" %} selected {% endif %}>GR</option>
+                                    <option value="4" {% if dialect=="4" %} selected {% endif %}>LU</option>
+                                    <option value="5" {% if dialect=="5" %} selected {% endif %}>SG</option>
+                                    <option value="6" {% if dialect=="6" %} selected {% endif %}>VS</option>
+                                    <option value="7" {% if dialect=="7" %} selected {% endif %}>ZH</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary form-control" type="submit" value="Übersetzen">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Audio synthetisieren</h5>
+                        <form action="/synthesize" method="post" id="synthesizeForm">
+                            <input type="hidden" name="synthesize" value="true">
+                            <div class="form-group">
+                                <label for="text_ch">Schweizerdeutscher Text</label>
+                                <textarea class="form-control" name="text_ch" id="text_ch" rows="3" maxlength="256">{{text_ch}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dialect">Dialekt</label>
+                                <select name="dialect" id="dialect" class="form-control">
+                                    <option value="0" {% if dialect=="0" %} selected {% endif %}>AG</option>
+                                    <option value="1" {% if dialect=="1" %} selected {% endif %}>BE</option>
+                                    <option value="2" {% if dialect=="2" %} selected {% endif %}>BS</option>
+                                    <option value="3" {% if dialect=="3" %} selected {% endif %}>GR</option>
+                                    <option value="4" {% if dialect=="4" %} selected {% endif %}>LU</option>
+                                    <option value="5" {% if dialect=="5" %} selected {% endif %}>SG</option>
+                                    <option value="6" {% if dialect=="6" %} selected {% endif %}>VS</option>
+                                    <option value="7" {% if dialect=="7" %} selected {% endif %}>ZH</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary form-control" type="submit" value="Synthetisieren">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if audio_data %}
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Audio</h5>
+                        <a class="btn btn-primary w-100" onclick="play()">Wiedergabe</a>
+                        <div id="waveform"></div>
+                        <div id="wave-spectrogram"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    {% if audio_data %}
-    <div class="col m-5">
-        <a class="btn btn-primary w-100" onclick="play()">Play</a>
-        <div id="waveform"></div>
-        <div id="wave-spectrogram"></div>
-    </div>
+        <script>
+            // Hide the loading spinner
+            document.querySelector('.loading-spinner-container').classList.remove('active');
 
-    <script>
-        let wavesurfer = null;
+            let wavesurfer = null;
 
-        function play() {
-            wavesurfer.play();
-        }
-
-        function _base64ToArrayBuffer(base64) {
-            var binary_string = window.atob(base64);
-            var len = binary_string.length;
-            var bytes = new Uint8Array(len);
-            for (var i = 0; i < len; i++) {
-                bytes[i] = binary_string.charCodeAt(i);
+            function play() {
+                wavesurfer.play();
             }
-            return bytes.buffer;
-        }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
+            function _base64ToArrayBuffer(base64) {
+                var binary_string = window.atob(base64);
+                var len = binary_string.length;
+                var bytes = new Uint8Array(len);
+                for (var i = 0; i < len; i++) {
+                    bytes[i] = binary_string.charCodeAt(i);
+                }
+                return bytes.buffer;
+            }
 
-            wavesurfer = WaveSurfer.create({
-                container: "#waveform",
-                waveColor: "violet",
-                progressColor: "purple",
-                normalize: true,
-                responsive: true,
-                plugins: [
-                    WaveSurfer.spectrogram.create({
-                        container: "#wave-spectrogram",
-                        labels: true,
-                        height: 256,
-                    }),
-                ],
+            document.addEventListener('DOMContentLoaded', (event) => {
+
+                wavesurfer = WaveSurfer.create({
+                    container: "#waveform",
+                    waveColor: "violet",
+                    progressColor: "purple",
+                    normalize: true,
+                    responsive: true,
+                    plugins: [
+                        WaveSurfer.spectrogram.create({
+                            container: "#wave-spectrogram",
+                            labels: true,
+                            height: 256,
+                        }),
+                    ],
+                });
+
+                wavesurfer.loadArrayBuffer(_base64ToArrayBuffer('{{ audio_data }}'));
             });
+        </script>
 
-            wavesurfer.loadArrayBuffer(_base64ToArrayBuffer('{{ audio_data }}'));
-        });
-    </script>
-
-    {% endif %}
+        {% endif %}
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
-    <script src="static/wavesurfer.js"></script>
-    <script src="static/wavesurfer.spectrogram.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+                crossorigin="anonymous"></script>
+        <script src="static/wavesurfer.js"></script>
+        <script src="static/wavesurfer.spectrogram.min.js"></script>
+        <script>
+            // Get the form element
+            const form = document.getElementById("synthesizeForm");
+
+            // Listen for the submit event on the form
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                // Show the loading spinner
+                document.querySelector('.loading-spinner-container').classList.add('active');
+
+                // continue with the form submission
+                form.submit();
+            });
+        </script>
+    </div>
 </div>
 </body>
 </html>

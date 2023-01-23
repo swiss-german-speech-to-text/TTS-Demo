@@ -81,10 +81,11 @@
             <div class="col-md-12">
                 <div class="jumbotron">
                     <h1 class="display-4">Schweizerdeutsch Text to Speech</h1>
-                    <p>Hochdeutsche Texte können automatisch in einen von 8 schweizerdeutschen Dialekten übersetzt werden. Wir unterstützen folgende Kantone: </p>
+                    <p>Hochdeutsche Texte können automatisch in einen von 8 schweizerdeutschen Dialekten übersetzt werden. Wir unterstützen folgende Dialekte: </p>
                     <p>Aargau, Bern, Basel, Graubünden, Luzern, St Gallen, Wallis, Zürich</p>
                     <p>Die schweizerdeutschen Texte können anschliessend automatisch im entsprechenden Dialekt synthetisiert werden.</p>
                     <p>Wir empfehlen die Texte auf Hochdeutsch zu schreiben und automatisch in den entsprechenden Dialekt übersetzen zu lassen. Das Text-to-Speech System funktioniert mit dieser schweizerdeutschen Schreibweise am besten.</p>
+                    <p>Texte dürfen maximal 256 Zeichen lang sein.</p>
                     <p>Credits: Tobias Bollinger. Verwendete Trainingsdaten: SwissDial 1.1 <a href="https://mtc.ethz.ch/publications/open-source/swiss-dial.html">https://mtc.ethz.ch/publications/open-source/swiss-dial.html</a></p>
                 </div>
             </div>
@@ -92,11 +93,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Deutsch zu Schweizerdeutsch Textübersetzung</h5>
-                        <form action="/tts/translate" method="post">
+                        <form action="/tts/translate" method="post" id="translateForm"  {% if not text_de %} class="was-validated" {% endif %}>
                             <input type="hidden" name="translate" value="true">
                             <div class="form-group">
                                 <label for="text_de">Deutscher Text</label>
-                                <textarea class="form-control" name="text_de" id="text_de" rows="3" maxlength="256">{{text_de}}</textarea>
+                                <textarea {% if not text_de %} class="form-control is-invalid" {% else %}  class="form-control" {% endif %} name="text_de" id="text_de" rows="3" maxlength="256" required>{{text_de}}</textarea>
+                                <div class="invalid-feedback">Der Text darf nicht leer und nicht länger als 256 Zeichen lang sein.</div>
                             </div>
                             <div class="form-group">
                                 <label for="dialect_translate">in folgenden Dialekt übersetzen</label>
@@ -122,11 +124,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Audio synthetisieren</h5>
-                        <form action="/tts/synthesize" method="post" id="synthesizeForm">
+                        <form action="/tts/synthesize" method="post" id="synthesizeForm"  {% if text_de %} class="was-validated" {% endif %}>
                             <input type="hidden" name="synthesize" value="true">
+                            <input type="hidden" name="text_de" value="{{text_de}}">
                             <div class="form-group">
                                 <label for="text_ch">Schweizerdeutscher Text</label>
-                                <textarea class="form-control" name="text_ch" id="text_ch" rows="3" maxlength="256">{{text_ch}}</textarea>
+                                <textarea {% if text_de %} class="form-control is-invalid" {% else %}  class="form-control" {% endif %} name="text_ch" id="text_ch" rows="3" maxlength="256" required>{{text_ch}}</textarea>
+                                <div class="invalid-feedback">Der Text darf nicht leer und nicht länger als 256 Zeichen lang sein.</div>
                             </div>
                             <div class="form-group">
                                 <label for="dialect">Dialekt</label>
@@ -213,6 +217,19 @@
         <script src="../static/wavesurfer.js"></script>
         <script src="../static/wavesurfer.spectrogram.min.js"></script>
         <script>
+            // Get the form element
+            const translateForm = document.getElementById("translateForm");
+
+            // Listen for the submit event on the form
+            translateForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                // Show the loading spinner
+                document.querySelector('.loading-spinner-container').classList.add('active');
+
+                // continue with the form submission
+                translateForm.submit();
+            });
+
             // Get the form element
             const form = document.getElementById("synthesizeForm");
 

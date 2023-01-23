@@ -94,7 +94,7 @@ def translate():
     dialect = request.form.get('dialect', None)
     audio_data = None
 
-    if text_de != '' and len(text_de) < MAX_TEXT_LEN and dialect is not None:
+    if text_de != '' and len(text_de) <= MAX_TEXT_LEN and dialect is not None:
         text_ch = translate_to_ch(text_de, int(dialect))
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
@@ -106,7 +106,7 @@ def synthesize():
     dialect = request.form.get('dialect', None)
     audio_data = None
 
-    if text_ch != '' and len(text_ch) < 256 and dialect is not None:
+    if text_ch != '' and len(text_ch) <= 256 and dialect is not None:
         wav, sr = inference_ch(int(dialect), text_ch)
 
         bytes_wav = bytes()

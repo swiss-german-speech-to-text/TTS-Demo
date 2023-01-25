@@ -30,9 +30,8 @@ wd = str(Path().absolute())
 model_dir = os.path.join(wd, model_data["working_dir"])
 xvector = XVector(os.path.join(model_dir, "dump/**/spk_xvector.ark"))
 tts = Text2Speech.from_pretrained(
-        model_file=os.path.join(model_dir, model_data["model_file"]),
-        vocoder_file=os.path.join(model_dir, model_data["vocoder_file"]))
-
+    model_file=os.path.join(model_dir, model_data["model_file"]),
+    vocoder_file=os.path.join(model_dir, model_data["vocoder_file"]))
 
 id_to_dialect = {
     0: 'ag',
@@ -95,6 +94,8 @@ def translate():
     audio_data = None
 
     if text_de != '' and len(text_de) <= MAX_TEXT_LEN and dialect is not None:
+        text_de = " ".join(text_de.strip().split())
+        text_de = text_de[0].upper() + text_de[1:] + "."  # Capitalize first letter and add dot at the end
         text_ch = translate_to_ch(text_de, int(dialect))
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 

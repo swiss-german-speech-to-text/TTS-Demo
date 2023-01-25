@@ -27,7 +27,7 @@ class Translator:
         )
         decoded_out = self.model.generate(
             input_batch_pt['input_ids'].to(self.device),
-            max_length=64,
+            max_length=256,
             pad_token_id=self.tokenizer.eos_token_id,
             num_beams=self.beam_size,
             num_return_sequences=1

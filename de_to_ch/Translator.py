@@ -1,10 +1,11 @@
 import os
+from pathlib import Path
 import torch
 
 from de_to_ch.utils import setup_device
 
-from transformers.models.t5.modeling_t5 import T5ForConditionalGeneration
 from transformers.models.t5.tokenization_t5_fast import T5TokenizerFast
+import ctranslate2
 
 
 class Translator:
@@ -14,29 +15,22 @@ class Translator:
         self.beam_size = 1
         self.device, n_gpu = setup_device()
 
-        self.model = T5ForConditionalGeneration.from_pretrained(os.path.join(self.model_output_dir, 'best-model'))
-        self.tokenizer = T5TokenizerFast.from_pretrained(self.t5)
-        self.model.to(self.device)
+        ct2_model_path = Path(self.model_output_dir, 'ct2-model')
+        ct2_model_path.mkdir(parents=True, exist_ok=True)
 
-    def translate(self, sentences):
-        with torch.inference_mode():
-            input_batch_pt = self.tokenizer(
-                sentences,
-                return_tensors='pt',
-                truncation=True,
-                max_length=256,
-                padding=True
-            )
-            decoded_out = self.model.generate(
-                input_batch_pt['input_ids'].to(self.device),
-                max_length=256,
-                pad_token_id=self.tokenizer.eos_token_id,
-                num_beams=self.beam_size,
-                num_return_sequences=1
-            )
-            pred_batch = self.tokenizer.batch_decode(decoded_out, skip_special_tokens=True)
-        
-        return pred_batch
+        ct = ctranslate2.converters.TransformersConverter(model_name_or_path=os.path.join(self.model_output_dir, 'best-model'))
+        ct.convert(output_dir=ct2_model_path, force=True)
+
+        self.translator = ctranslate2.Translator(ct2_model_path, device="cpu", compute_type="auto")
+        self.tokenizer = T5TokenizerFast.from_pretrained(self.t5)
 
     def translate_one(self, sentence: str):
-        return self.translate([sentence])[0]
+        with torch.inference_mode():
+            input_tokens = self.tokenizer.convert_ids_to_tokens(self.tokenizer.encode(sentence))
+
+            results = self.translator.translate_batch([input_tokens])
+            output_tokens = results[0].hypotheses[0]
+
+            output_text = self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(output_tokens))
+
+        return output_text

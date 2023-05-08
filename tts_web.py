@@ -95,7 +95,10 @@ def translate():
 
     if text_de != '' and len(text_de) <= MAX_TEXT_LEN and dialect is not None:
         text_de = " ".join(text_de.strip().split())
-        text_de = text_de[0].upper() + text_de[1:] + "."  # Capitalize first letter and add dot at the end
+        text_de = text_de[0].upper() + text_de[1:] # Capitalize first letter
+        # add a dot at the end if there is no punctuation
+        if text_de[-1] not in [".", "!", "?"]:
+            text_de += "."
         text_ch = translate_to_ch(text_de, int(dialect))
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 

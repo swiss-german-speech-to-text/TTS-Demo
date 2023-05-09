@@ -103,8 +103,8 @@ def translate():
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
 
-@app.route("/tts/api_translate", methods=['POST'])
-def translate():
+@app.route("/tts/api/translate", methods=['POST'])
+def api_translate():
     text_de = request.form.get('text_de', '')
     dialect = request.form.get('dialect', None)
 
@@ -138,8 +138,8 @@ def synthesize():
         audio_data = base64.b64encode(wav_bytes).decode('UTF-8')
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
-@app.route("/tts/api_synthesize", methods=['POST'])
-def synthesize():
+@app.route("/tts/api/synthesize", methods=['POST'])
+def api_synthesize():
     text_ch = request.form.get('text_ch', '')
     dialect = request.form.get('dialect', None)
 

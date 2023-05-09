@@ -1,6 +1,6 @@
 import base64
 
-from flask import Flask, Response, render_template, request
+from flask import Flask, Response, render_template, request, jsonify
 from typing import List, Tuple
 
 import numpy as np

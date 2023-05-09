@@ -103,6 +103,23 @@ def translate():
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
 
 
+@app.route("/tts/api/translate", methods=['POST'])
+def translate():
+    text_de = request.form.get('text_de', '')
+    dialect = request.form.get('dialect', None)
+
+    if text_de != '' and len(text_de) <= MAX_TEXT_LEN and dialect is not None:
+        text_de = " ".join(text_de.strip().split())
+        text_de = text_de[0].upper() + text_de[1:] # Capitalize first letter
+        # add a dot at the end if there is no punctuation
+        if text_de[-1] not in [".", "!", "?"]:
+            text_de += "."
+        text_ch = translate_to_ch(text_de, int(dialect))
+    # return text_ch as json
+    response = {'text_ch': text_ch}
+    return jsonify(response)
+
+
 @app.route("/tts/synthesize", methods=['POST'])
 def synthesize():
     text_de = request.form.get('text_de', '')
@@ -110,7 +127,7 @@ def synthesize():
     dialect = request.form.get('dialect', None)
     audio_data = None
 
-    if text_ch != '' and len(text_ch) <= 256 and dialect is not None:
+    if text_ch != '' and len(text_ch) <= MAX_TEXT_LEN and dialect is not None:
         wav, sr = inference_ch(int(dialect), text_ch)
 
         bytes_wav = bytes()
@@ -120,6 +137,23 @@ def synthesize():
 
         audio_data = base64.b64encode(wav_bytes).decode('UTF-8')
     return render_template("result.html", audio_data=audio_data, text_de=text_de, text_ch=text_ch, dialect=dialect)
+
+@app.route("/tts/api/synthesize", methods=['POST'])
+def synthesize():
+    text_ch = request.form.get('text_ch', '')
+    dialect = request.form.get('dialect', None)
+
+    if text_ch != '' and len(text_ch) <= MAX_TEXT_LEN and dialect is not None:
+        wav, sr = inference_ch(int(dialect), text_ch)
+
+        bytes_wav = bytes()
+        byte_io = io.BytesIO(bytes_wav)
+        write(byte_io, sr, wav)
+        wav_bytes = byte_io.read()
+
+        audio_data = base64.b64encode(wav_bytes).decode('UTF-8')
+    response = {'audio_data': audio_data}
+    return jsonify(response)
 
 
 if __name__ == '__main__':
